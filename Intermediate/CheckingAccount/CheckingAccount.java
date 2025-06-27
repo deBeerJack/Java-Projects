@@ -62,15 +62,34 @@ public class CheckingAccount {
     }
 
     /**
-     * Calculates the monthly interest.
-     * @return the interest amount, or 0.0 if account is closed
+     * Calculates the monthly interest amount (does not apply it).
+     * @return the interest amount, or 0 if account is closed
      */
-    public double getMonthlyInterest(){
+    public double getMonthlyInterest() {
         if (isClosed) {
             System.out.println("Error: account closed");
-            return 0.0;
+            return 0;
         }
-        return this.interestRate * this.balance;
+        return balance * interestRate;
+    }
+
+    /**
+     * Applies monthly interest to the account balance.
+     * Prints the interest rate, the interest amount, and the new balance.
+     * @return the new balance, or -1 if account is closed
+     */
+    public int applyMonthlyInterest() {
+        if (isClosed) {
+            System.out.println("Error: account closed");
+            return -1;
+        }
+        System.out.printf("Interest rate: %.2f%%\n", interestRate * 100);
+        double interest = getMonthlyInterest();
+        System.out.printf("Interest amount: %.2f %s\n", interest, currency);
+        this.balance += (int) interest;
+        transactionHistory.add("Monthly interest applied: +" + (int) interest + " " + currency);
+        System.out.println("New balance: " + this.balance + " " + currency);
+        return this.balance;
     }
 
     /**
@@ -129,6 +148,7 @@ public class CheckingAccount {
         }
         this.balance += amount;
         transactionHistory.add("Deposited: " + amount + " " + currency);
+        System.out.println("The new balance after the deposit is " + this.balance);
     }
 
     /**

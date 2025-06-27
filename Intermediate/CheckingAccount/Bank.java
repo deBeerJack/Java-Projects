@@ -15,7 +15,8 @@ public class Bank {
         accounts = new CheckingAccount[MAX_ACCOUNTS];
         accountCount = 0;
         addAccount(new CheckingAccount("Zeus", 100, "1", Currency.USD, 0.05));
-        addAccount(new CheckingAccount("Hades", 200, "2", Currency.EUR, 0.03));
+        addAccount(new CheckingAccount("Poseidon", 20, "2", Currency.GBP, 0.15));
+        addAccount(new CheckingAccount("Hades", 200, "3", Currency.EUR, 0.03));
     }
 
     /**
@@ -70,6 +71,7 @@ public class Bank {
         if (from.withdrawMoney(amount) != -1) {
             to.deposit(amount);
             System.out.println("Transferred " + amount + " from " + from.getName() + " to " + to.getName());
+            System.out.println("New balance for " + from.getName() + ": " + from.getBalance());
             return true;
         }
         return false;
